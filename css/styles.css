@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 1rem;
+    background-color: #202020;
+    color: white;
+    font-family: monospace;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.spell-card {
+    background-color: #2e2e2e;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+select {
+    padding: 0.5rem;
+}
+
+@media (max-width: 600px) {
+
+    .filters {
+        flex-direction: column;
+    }
+}
