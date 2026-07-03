@@ -1,4 +1,4 @@
-import { getAllSpells, getSpellsByClass, getSpellsByLevel } from "./api.js";
+import { getAllSpells, getSpellsByClass, getSpellsByLevel, getSpellDetails } from "./api.js";
 
 const spellContainer = document.querySelector("#spellContainer");
 const classFilter = document.querySelector("#classFilter");
@@ -12,51 +12,46 @@ async function loadSpells() {
 
 }
 
-function displaySpells(spells) {
+async function displaySpells(spells) {
 
     spellContainer.innerHTML = "";
 
-    spells.forEach(spell => {
+    for (const spell of spells) {
+
+        const details = await getSpellDetails(spell.index);
 
         spellContainer.innerHTML += `
             <div class="spell-card">
-                <h2>${spell.name}</h2>
+                <h2>${details.name}</h2>
+                <p><strong>Level:</strong> ${details.level}</p>
             </div>
         `;
-
-    });
-
-}
-
-async function handleClassChange() {
-    const selectedClass = classFilter.value;
-
-    let spells = [];
-
-    if (selectedClass === "") {
-        spells = await getAllSpells();
-    } else {
-        spells = await getSpellsByClass(selectedClass);
     }
 
-    displaySpells(spells);
 }
 
-async function handleLevelChange() {
+async function applyFilters() {
+
+    const selectedClass = classFilter.value;
     const selectedLevel = levelFilter.value;
 
     let spells = [];
 
-    if (selectedLevel === "") {
-        spells = await getAllSpells();
+    if (selectedClass !== "") {
+        spells = await getSpellsByClass(selectedClass);
     } else {
-        spells = await getSpellsByLevel(selectedLevel);
+        spells = await getAllSpells();
+    }
+
+    if (selectedLevel !== "") {
+        spells = spells.filter(spell => spell.level === Number(selectedLevel));
     }
 
     displaySpells(spells);
 }
 
-classFilter.addEventListener("change", handleClassChange);
-levelFilter.addEventListener("change", handleLevelChange);
+
+classFilter.addEventListener("change", applyFilters);
+levelFilter.addEventListener("change", applyFilters);
 
 loadSpells();

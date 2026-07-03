@@ -57,3 +57,20 @@ export async function getSpellsByLevel(level) {
         return [];
     }
 }
+
+export async function getSpellDetails(index) {
+
+    try {
+        const response = await fetch(`${Base_URL}/spells/${index}`);
+
+        if (!response.ok) {
+            throw new Error(`Could not fetch details for spell: ${index}`);
+        }
+
+        return await response.json();
+    } catch(error) {
+        
+        console.error(error);
+        return null;
+    }
+}
