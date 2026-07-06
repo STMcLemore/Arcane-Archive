@@ -13,22 +13,51 @@ async function loadSpells() {
 }
 
 async function displaySpells(spells) {
-
     spellContainer.innerHTML = "";
 
     for (const spell of spells) {
 
         const details = await getSpellDetails(spell.index);
+        const spellCard = document.createElement("div");
+        spellCard.classList.add("spell-card");
 
-        spellContainer.innerHTML += `
-            <div class="spell-card">
-                <h2>${details.name}</h2>
-                <p><strong>Level:</strong> ${details.level}</p>
-            </div>
+
+        spellCard.innerHTML = `
+            <h2>${details.name}</h2>
+            <p>Level:${details.level}</p>
+            <p>School:${details.school.name}</p>
+            <button class ="details-button" data-index="${details.index}">View Details</button>
+
+            <div class="details-container"></div>
         `;
-    }
 
+        const button = spellCard.querySelector(".details-button");
+
+        button.addEventListener("click", async function() {
+            const detailsContainer = spellCard.querySelector(".details-container");
+
+            if (detailsContainer.innerHTML !== "") {
+                detailsContainer.innerHTML = "";
+                this.textContent = "View Details";
+                return;
+            }
+
+            detailsContainer.innerHTML = `
+                <p><strong>Range:</strong> ${details.range}</p>
+                    <p><strong>Duration:</strong> ${details.duration}</p>
+                    <p><strong>Casting Time:</strong> ${details.casting_time}</p>
+                    <p><strong>Components:</strong> ${details.components.join(", ")}</p>
+                    <p><strong>Description:</strong> ${details.desc.join("<br><br>")}</p>
+                `;
+
+                this.textContent = "Hide Details";
+            });
+            
+            spellContainer.appendChild(spellCard);
+    }
 }
+
+
 
 async function applyFilters() {
 
