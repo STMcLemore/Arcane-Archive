@@ -1,86 +1,97 @@
-import { getAllSpells, getSpellsByClass, getSpellsByLevel, getSpellDetails } from "./api.js";
+import {
+    getAllSpells,
+    getSpellsByClass,
+    getSpellsByLevel,
+    getSpellDetails
+} from "./api.js";
 
 const spellContainer = document.querySelector("#spellContainer");
 const classFilter = document.querySelector("#classFilter");
 const levelFilter = document.querySelector("#levelFilter");
 
-async function loadSpells() {
 
-    const spells = await getAllSpells();
-
-    displaySpells(spells);
-
+async function loadSpells() {  
+    spellContainer.innerHTML = "<p>Loading spells...</p>"; 
+    const spellList = await getAllSpells();
+    displaySpells(spellList);
 }
 
-async function displaySpells(spells) {
+
+async function displaySpells(spells) { 
     spellContainer.innerHTML = "";
 
     for (const spell of spells) {
-
         const details = await getSpellDetails(spell.index);
-        const spellCard = document.createElement("div");
-        spellCard.classList.add("spell-card");
-
-
-        spellCard.innerHTML = `
-            <h2>${details.name}</h2>
-            <p>Level:${details.level}</p>
-            <p>School:${details.school.name}</p>
-            <button class ="details-button" data-index="${details.index}">View Details</button>
-
-            <div class="details-container"></div>
-        `;
-
-        const button = spellCard.querySelector(".details-button");
-
-        button.addEventListener("click", async function() {
-            const detailsContainer = spellCard.querySelector(".details-container");
-
-            if (detailsContainer.innerHTML !== "") {
-                detailsContainer.innerHTML = "";
-                this.textContent = "View Details";
-                return;
-            }
-
-            detailsContainer.innerHTML = `
-                <p><strong>Range:</strong> ${details.range}</p>
-                    <p><strong>Duration:</strong> ${details.duration}</p>
-                    <p><strong>Casting Time:</strong> ${details.casting_time}</p>
-                    <p><strong>Components:</strong> ${details.components.join(", ")}</p>
-                    <p><strong>Description:</strong> ${details.desc.join("<br><br>")}</p>
-                `;
-
-                this.textContent = "Hide Details";
-            });
-            
-            spellContainer.appendChild(spellCard);
+        const spellCard = createSpellCard(details);
+        spellContainer.appendChild(spellCard);
     }
 }
 
 
+function createSpellCard(details) {  //
+    const spellCard = document.createElement("div");
 
-async function applyFilters() {
+    spellCard.classList.add("spell-card");
+
+    const levelText = details.level === 0 ? "Cantrip" : `Level ${details.level}`; 
+
+    spellCard.innerHTML = `
+        <h2>${details.name}</h2>
+        <p>Level: ${levelText}</p>
+        <p>School: ${details.school.name}</p>
+        <p>Range: ${details.range}</p>
+        <p>Casting Time: ${details.casting_time}</p>
+        <button class="details-button">View Details</button>
+        <div class="details-container"></div>
+    `;
+
+    const button = spellCard.querySelector(".details-button");
+
+    const detailsContainer = spellCard.querySelector(".details-container");
+
+    button.addEventListener("click", async function () {
+        if (detailsContainer.innerHTML !== "") {
+            detailsContainer.innerHTML = "";
+            button.textContent = "View Details";
+            return;
+    }
+
+    detailsContainer.innerHTML = "<p>Loading details...</p>";
+
+    detailsContainer.innerHTML = `
+        <p>Components: ${details.components.join(", ")}</p>
+        <p>Description: ${details.desc.join("<br><br>")}</p>
+        `;
+
+        button.textContent = "Hide Details";
+    });
+
+    return spellCard;
+
+
+}
+
+
+async function applyFilters() {  
 
     const selectedClass = classFilter.value;
     const selectedLevel = levelFilter.value;
 
     let spells = [];
 
-    if (selectedClass !== "") {
+    if (selectedLevel !== "") {
+        spells = await getSpellsByLevel(selectedLevel);
+    } else if (selectedClass !== "") {
         spells = await getSpellsByClass(selectedClass);
     } else {
         spells = await getAllSpells();
-    }
-
-    if (selectedLevel !== "") {
-        spells = spells.filter(spell => spell.level === Number(selectedLevel));
     }
 
     displaySpells(spells);
 }
 
 
-classFilter.addEventListener("change", applyFilters);
+classFilter.addEventListener("change", applyFilters);  
 levelFilter.addEventListener("change", applyFilters);
 
 loadSpells();
