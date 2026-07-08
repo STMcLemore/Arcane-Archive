@@ -8,6 +8,7 @@ import {
 const spellContainer = document.querySelector("#spellContainer");
 const classFilter = document.querySelector("#classFilter");
 const levelFilter = document.querySelector("#levelFilter");
+const searchInput = document.querySelector("#searchInput");
 
 
 async function loadSpells() {  
@@ -76,6 +77,7 @@ async function applyFilters() {
 
     const selectedClass = classFilter.value;
     const selectedLevel = levelFilter.value;
+    const searchText = searchInput.value.toLowerCase();
 
     let spells = [];
 
@@ -87,10 +89,16 @@ async function applyFilters() {
         spells = await getAllSpells();
     }
 
+    if (searchText !== "") {
+            spells = spells.filter(spell => spell.name.toLowerCase().includes(searchText)
+        );
+    }
+
     displaySpells(spells);
 }
 
 
+searchInput.addEventListener("input", applyFilters);
 classFilter.addEventListener("change", applyFilters);  
 levelFilter.addEventListener("change", applyFilters);
 
