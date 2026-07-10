@@ -9,16 +9,19 @@ const spellContainer = document.querySelector("#spellContainer");
 const classFilter = document.querySelector("#classFilter");
 const levelFilter = document.querySelector("#levelFilter");
 const searchInput = document.querySelector("#searchInput");
+const searchButton = document.querySelector("#searchButton");
+const errorMessage = document.querySelector("#errorMessage");
+console.log("Error message element:", errorMessage);
 
 
-async function loadSpells() {  
-    spellContainer.innerHTML = "<p>Loading spells...</p>"; 
+async function loadSpells() {
+    spellContainer.innerHTML = "<p>Loading spells...</p>";
     const spellList = await getAllSpells();
     displaySpells(spellList);
 }
 
 
-async function displaySpells(spells) { 
+async function displaySpells(spells) {
     spellContainer.innerHTML = "";
 
     for (const spell of spells) {
@@ -34,7 +37,7 @@ function createSpellCard(details) {  //
 
     spellCard.classList.add("spell-card");
 
-    const levelText = details.level === 0 ? "Cantrip" : `Level ${details.level}`; 
+    const levelText = details.level === 0 ? "Cantrip" : `Level ${details.level}`;
 
     spellCard.innerHTML = `
         <h2>${details.name}</h2>
@@ -73,11 +76,21 @@ function createSpellCard(details) {  //
 }
 
 
-async function applyFilters() {  
+async function applyFilters() {
+
 
     const selectedClass = classFilter.value;
     const selectedLevel = levelFilter.value;
-    const searchText = searchInput.value.toLowerCase();
+    const searchText = searchInput.value.trim().toLowerCase();
+
+    errorMessage.textContent = "";
+
+    const validSearchText = /^[a-zA-Z\s'-]*$/;
+
+    if (!validSearchText.test(searchText)) {
+        errorMessage.textContent = "Please enter a valid search term. Use letters, spaces, apostrophes, or hyphens only.";
+        return;
+    }
 
     let spells = [];
 
@@ -98,8 +111,13 @@ async function applyFilters() {
 }
 
 
-searchInput.addEventListener("input", applyFilters);
-classFilter.addEventListener("change", applyFilters);  
-levelFilter.addEventListener("change", applyFilters);
+searchButton.addEventListener("click", applyFilters);
+searchInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        applyFilters();
+    }
+});
+// classFilter.addEventListener("change", applyFilters);
+// levelFilter.addEventListener("change", applyFilters);
 
 loadSpells();

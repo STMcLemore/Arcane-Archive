@@ -23,6 +23,12 @@ select {
     padding: 0.5rem;
 }
 
+#errorMessage {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
 @media (max-width: 600px) {
 
     .filters {
