@@ -2,8 +2,22 @@ body {
     margin: 0;
     padding: 1rem;
     background-color: #202020;
+    display: flex;
+    flex-direction: column;
     color: white;
     font-family: monospace;
+}
+
+#searchInput {
+    padding: 1rem;
+    border-radius: 8rem;
+}
+
+#searchButton {
+    max-width: 1200px;
+    align-self: flex-start;
+    padding: 1rem;
+    border-radius: 8px;
 }
 
 .filters {
@@ -12,11 +26,27 @@ body {
     margin-bottom: 1rem;
 }
 
+#classFilter, #levelFilter {
+   border-radius: 8px;
+}
+
 .spell-card {
     background-color: #2e2e2e;
     padding: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
     border-radius: 8px;
+}
+
+
+.details-button {
+    background-color: #444;
+    align-self: flex-end;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    display: block; 
+    margin-left: auto;
 }
 
 select {
@@ -24,7 +54,12 @@ select {
 }
 
 #errorMessage {
-    color: red;
+    display: none;
+    color: black;
+    background-color: pink;
+    border: 1px solid red;
+    border-radius: 8px;
+    padding: .5rem;
     font-size: 0.9rem;
     margin-top: 0.5rem;
 }

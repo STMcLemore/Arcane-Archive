@@ -32,7 +32,7 @@ async function displaySpells(spells) {
 }
 
 
-function createSpellCard(details) {  //
+function createSpellCard(details) {  
     const spellCard = document.createElement("div");
 
     spellCard.classList.add("spell-card");
@@ -40,13 +40,12 @@ function createSpellCard(details) {  //
     const levelText = details.level === 0 ? "Cantrip" : `Level ${details.level}`;
 
     spellCard.innerHTML = `
+    <div class="spell-header">
         <h2>${details.name}</h2>
-        <p>Level: ${levelText}</p>
-        <p>School: ${details.school.name}</p>
-        <p>Range: ${details.range}</p>
-        <p>Casting Time: ${details.casting_time}</p>
-        <button class="details-button">View Details</button>
+        <p>${levelText}</p>
+    </div>
         <div class="details-container"></div>
+        <button class="details-button" aria-label="View Details">+</button>
     `;
 
     const button = spellCard.querySelector(".details-button");
@@ -56,18 +55,23 @@ function createSpellCard(details) {  //
     button.addEventListener("click", async function () {
         if (detailsContainer.innerHTML !== "") {
             detailsContainer.innerHTML = "";
-            button.textContent = "View Details";
+            button.textContent = "+";
+            button.setAttribute("aria-label", "View Details");
             return;
     }
 
     detailsContainer.innerHTML = "<p>Loading details...</p>";
 
     detailsContainer.innerHTML = `
+        <p>${details.school.name}</p>
+        <p>Range: ${details.range}</p>
+        <p>Casting Time: ${details.casting_time}</p>
         <p>Components: ${details.components.join(", ")}</p>
         <p>Description: ${details.desc.join("<br><br>")}</p>
         `;
 
-        button.textContent = "Hide Details";
+        button.textContent = "-";
+        button.setAttribute("aria-label", "Hide Details");
     });
 
     return spellCard;
@@ -78,18 +82,24 @@ function createSpellCard(details) {  //
 
 async function applyFilters() {
 
+    errorMessage.style.display = 'none';
+    errorMessage.textContent = "";
 
     const selectedClass = classFilter.value;
     const selectedLevel = levelFilter.value;
     const searchText = searchInput.value.trim().toLowerCase();
 
-    errorMessage.textContent = "";
 
-    const validSearchText = /^[a-zA-Z\s'-]*$/;
 
-    if (!validSearchText.test(searchText)) {
-        errorMessage.textContent = "Please enter a valid search term. Use letters, spaces, apostrophes, or hyphens only.";
-        return;
+
+    if (searchText !== "") {
+        const validSearchText = /^[a-zA-Z\s'-]+$/;
+
+        if (!validSearchText.test(searchText)) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = "Please enter a valid search term. Use letters, spaces, apostrophes, or hyphens only.";
+            return;
+        }
     }
 
     let spells = [];
@@ -117,7 +127,6 @@ searchInput.addEventListener("keypress", function (event) {
         applyFilters();
     }
 });
-// classFilter.addEventListener("change", applyFilters);
-// levelFilter.addEventListener("change", applyFilters);
+
 
 loadSpells();
