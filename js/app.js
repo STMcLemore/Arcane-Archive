@@ -11,7 +11,6 @@ const levelFilter = document.querySelector("#levelFilter");
 const searchInput = document.querySelector("#searchInput");
 const searchButton = document.querySelector("#searchButton");
 const errorMessage = document.querySelector("#errorMessage");
-console.log("Error message element:", errorMessage);
 
 
 async function loadSpells() {
