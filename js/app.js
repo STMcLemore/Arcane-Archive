@@ -40,6 +40,7 @@ function createSpellCard(details) {
 
     spellCard.innerHTML = `
     <div class="spell-header">
+        <button class="save-button">Save Spell</button>
         <h2>${details.name}</h2>
         <p>${levelText}</p>
     </div>
@@ -47,9 +48,15 @@ function createSpellCard(details) {
         <button class="details-button" aria-label="View Details">+</button>
     `;
 
+    const saveButton = spellCard.querySelector(".save-button");
+
     const button = spellCard.querySelector(".details-button");
 
     const detailsContainer = spellCard.querySelector(".details-container");
+
+    saveButton.addEventListener("click", function () {
+    saveSpell(details);
+    });
 
     button.addEventListener("click", async function () {
         if (detailsContainer.innerHTML !== "") {
@@ -76,6 +83,23 @@ function createSpellCard(details) {
     return spellCard;
 
 
+}
+
+function saveSpell(spell) {
+    let savedSpells = JSON.parse(localStorage.getItem("savedSpells")) || []; // get current saved spells. if nothing is saved use empty array.
+
+    const alreadySaved = savedSpells.some(function (savedSpell) { // check if selected spell is already saved.
+        return savedSpell.index === spell.index;
+    });
+
+    if (alreadySaved) {
+        alert("This spell is already in your spellbook.");
+        return;
+    }
+
+    savedSpells.push(spell); // add spell.
+
+    localStorage.setItem("savedSpells", JSON.stringify(savedSpells)); // convert array into text and save.
 }
 
 
@@ -118,6 +142,7 @@ async function applyFilters() {
 
     displaySpells(spells);
 }
+
 
 
 searchButton.addEventListener("click", applyFilters);
