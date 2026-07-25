@@ -89,7 +89,7 @@ function saveSpell(spell) {
     let savedSpells = JSON.parse(localStorage.getItem("savedSpells")) || []; // get current saved spells. if nothing is saved use empty array.
 
     const alreadySaved = savedSpells.some(function (savedSpell) { // check if selected spell is already saved.
-        return savedSpell.index === spell.index;
+        return savedSpell.spell.index === spell.index;
     });
 
     if (alreadySaved) {
@@ -97,7 +97,11 @@ function saveSpell(spell) {
         return;
     }
 
-    savedSpells.push(spell); // add spell.
+    savedSpells.push({
+        spell: spell,
+        dateSaved: new Date().toLocaleDateString()
+}       );
+    
 
     localStorage.setItem("savedSpells", JSON.stringify(savedSpells)); // convert array into text and save.
 }

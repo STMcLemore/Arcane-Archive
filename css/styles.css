@@ -99,6 +99,17 @@ a {
     margin-left: auto;
 }
 
+.remove-button {
+    background-color: #444;
+    align-self: flex-end;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    display: block; 
+    margin-left: auto;
+}
+
 .details-button {
     background-color: #444;
     align-self: flex-end;
@@ -123,6 +134,10 @@ select {
     padding: .5rem;
     font-size: 0.9rem;
     margin-top: 0.5rem;
+}
+
+#returnLink {
+    margin: 1rem;
 }
 
 @media (min-width: 750px) {

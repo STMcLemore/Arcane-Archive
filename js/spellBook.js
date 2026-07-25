@@ -12,15 +12,18 @@ function displaySavedSpells() {
         return;
     }
 
-    for (const spell of savedSpells) {
-        const spellCard = createSpellCard(spell);
+    for (const savedSpell of savedSpells) {
+        const spellCard = createSpellCard(
+            savedSpell.spell,
+            savedSpell.dateSaved
+        );
 
         savedSpellContainer.appendChild(spellCard);
     }
 }
 
 
-function createSpellCard(details) {  
+function createSpellCard(details, dateSaved) {  
     const spellCard = document.createElement("div");
 
     spellCard.classList.add("spell-card");
@@ -29,7 +32,8 @@ function createSpellCard(details) {
 
     spellCard.innerHTML = `
     <div class="spell-header">
-        <button class="save-button">Save Spell</button>
+        <p>Saved On: ${dateSaved}</p>
+        <button class="remove-button">Remove Spell</button>
         <h2>${details.name}</h2>
         <p>${levelText}</p>
     </div>
@@ -37,14 +41,14 @@ function createSpellCard(details) {
         <button class="details-button" aria-label="View Details">+</button>
     `;
 
-    const saveButton = spellCard.querySelector(".save-button");
+    const removeButton = spellCard.querySelector(".remove-button");
 
     const button = spellCard.querySelector(".details-button");
 
     const detailsContainer = spellCard.querySelector(".details-container");
 
-    saveButton.addEventListener("click", function () {
-    saveSpell(details);
+    removeButton.addEventListener("click", function () {
+        removeSpell(details.index);
     });
 
     button.addEventListener("click", async function () {
@@ -73,5 +77,18 @@ function createSpellCard(details) {
 
 }
 
+function removeSpell(spellIndex) {
+    let savedSpells = JSON.parse(localStorage.getItem("savedSpells")) || [];
+
+    savedSpells = savedSpells.filter(function (savedSpell) {
+        return savedSpell.spell.index !== spellIndex;
+    });
+
+    localStorage.setItem(
+        "savedSpells", JSON.stringify(savedSpells)
+    );
+
+    displaySavedSpells();
+}
 
 displaySavedSpells();
