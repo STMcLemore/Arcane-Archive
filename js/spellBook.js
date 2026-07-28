@@ -23,6 +23,40 @@ function displaySavedSpells() {
 }
 
 
+function getTimeSinceSaved(dateSaved) {
+    const today = new Date();
+    const savedDate = new Date(dateSaved);
+ 
+    const difference = today - savedDate;
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+
+    if (days === 0) {
+        return "Today";
+    }
+
+    if (days === 1) {
+        return "1 day ago";
+    }
+
+    if (days < 7) {
+        return `${days} days ago`;
+    }
+
+    const weeks = Math.floor(days / 7);
+
+    if (weeks === 1) {
+        return "1 week ago";
+    }
+
+    if (weeks < 4) {
+        return `${weeks} weeks ago`
+    }
+
+    return `on ${dateSaved}`;
+
+}
+
 function createSpellCard(details, dateSaved) {  
     const spellCard = document.createElement("div");
 
@@ -30,9 +64,11 @@ function createSpellCard(details, dateSaved) {
 
     const levelText = details.level === 0 ? "Cantrip" : `Level ${details.level}`;
 
+    const timeSinceSaved = getTimeSinceSaved(dateSaved);
+
     spellCard.innerHTML = `
     <div class="spell-header">
-        <p>Saved On: ${dateSaved}</p>
+        <p>Saved ${timeSinceSaved}</p>
         <button class="remove-button">Remove Spell</button>
         <h2>${details.name}</h2>
         <p>${levelText}</p>

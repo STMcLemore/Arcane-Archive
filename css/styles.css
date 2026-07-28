@@ -23,6 +23,7 @@ header {
     margin-bottom: 10px;
     border-bottom: 2px solid #a37217;
     padding-bottom: 5px;
+    background-color: rgba(20,20,20,.7);
 }
 
 a {

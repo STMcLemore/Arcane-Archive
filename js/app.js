@@ -97,7 +97,7 @@ function saveSpell(spell) {
         return;
     }
 
-    savedSpells.push({
+    savedSpells.push({      // save spell and the date it was saved.
         spell: spell,
         dateSaved: new Date().toLocaleDateString()
 }       );
