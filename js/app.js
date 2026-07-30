@@ -34,6 +34,12 @@ async function displaySpells(spells) {
 function createSpellCard(details) {  
     const spellCard = document.createElement("div");
 
+    const savedSpells = JSON.parse(localStorage.getItem("savedSpells")) || [];
+
+    const alreadySaved = savedSpells.some(function (savedSpell) {
+        return savedSpell.spell.index === details.index;
+    });
+
     spellCard.classList.add("spell-card");
 
     const levelText = details.level === 0 ? "Cantrip" : `Level ${details.level}`;
@@ -54,8 +60,16 @@ function createSpellCard(details) {
 
     const detailsContainer = spellCard.querySelector(".details-container");
 
+    
+         if (alreadySaved) {
+        //  alert("This spell is already in your spellbook.");
+        //  return;
+        saveButton.textContent = "In spell book";
+        saveButton.disabled = true;
+     }
+
     saveButton.addEventListener("click", function () {
-    saveSpell(details);
+    saveSpell(details, saveButton);
     });
 
     button.addEventListener("click", async function () {
@@ -85,17 +99,18 @@ function createSpellCard(details) {
 
 }
 
-function saveSpell(spell) {
+function saveSpell(spell, saveButton) {
     let savedSpells = JSON.parse(localStorage.getItem("savedSpells")) || []; // get current saved spells. if nothing is saved use empty array.
+
 
     const alreadySaved = savedSpells.some(function (savedSpell) { // check if selected spell is already saved.
         return savedSpell.spell.index === spell.index;
     });
 
-    if (alreadySaved) {
-        alert("This spell is already in your spellbook.");
-        return;
-    }
+     if (alreadySaved) {
+          return;
+
+     }
 
     savedSpells.push({      // save spell and the date it was saved.
         spell: spell,
@@ -104,6 +119,9 @@ function saveSpell(spell) {
     
 
     localStorage.setItem("savedSpells", JSON.stringify(savedSpells)); // convert array into text and save.
+
+    saveButton.textContent = "Saved to spell book!";
+    saveButton.disabled = true;
 }
 
 

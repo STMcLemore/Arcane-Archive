@@ -23,7 +23,7 @@ header {
     margin-bottom: 10px;
     border-bottom: 2px solid #a37217;
     padding-bottom: 5px;
-    background-color: rgba(20,20,20,.7);
+    background-color: rgba(20,20,20,.8);
 }
 
 a {
@@ -86,7 +86,7 @@ a {
     rgba(204, 204, 204, 0.082),
     rgba(255, 255, 255, 0)  
     ),
-    url("../images/parchment3.png");
+    url("../images/parchment4.png");
 }
 
 .save-button {
