@@ -34,6 +34,7 @@ a {
     border-radius: 8px;
     background-color: #444;
     color: whitesmoke;
+    font-family: 'IM Fell English', serif;
 }
 
 #searchInput {
@@ -42,10 +43,12 @@ a {
     border: 1px solid #a37217;
     border-radius: 8rem;
     background-color: #444;
+        font-family: 'IM Fell English', serif;
 }
 
 #searchInput::placeholder {
     color: whitesmoke;
+    font-family: 'IM Fell English', serif;
 }
 
 #searchButton {
@@ -56,6 +59,7 @@ a {
     border-radius: 8px;
     background-color: #444;
     color: whitesmoke;
+    font-family: 'IM Fell English', serif;
 }
 
 .filters {
@@ -70,6 +74,8 @@ a {
     border: 1px solid #a37217;
    border-radius: 8px;
    background-color: #444;
+    font-family: 'IM Fell English', serif; 
+
 }
 
 
@@ -98,6 +104,7 @@ a {
     border-radius: 4px;
     display: block; 
     margin-left: auto;
+    font-family: 'IM Fell English', serif;
 }
 
 .remove-button {
