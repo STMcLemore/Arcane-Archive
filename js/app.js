@@ -61,9 +61,7 @@ function createSpellCard(details) {
     const detailsContainer = spellCard.querySelector(".details-container");
 
     
-         if (alreadySaved) {
-        //  alert("This spell is already in your spellbook.");
-        //  return;
+    if (alreadySaved) {
         saveButton.textContent = "In spell book";
         saveButton.disabled = true;
      }

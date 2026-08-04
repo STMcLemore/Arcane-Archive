@@ -1,11 +1,11 @@
-
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap');
 
 body {
  background-color: #202020; 
     display: flex;
     flex-direction: column; 
     color: white;
-    font-family: monospace;
+    font-family: 'IM Fell English', serif; 
     background-image:
         linear-gradient(
             rgba(20,20,20,.1),
