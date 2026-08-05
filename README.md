@@ -1,6 +1,6 @@
 # Arcane Archive
 
-Arcane Archive is a simple Dungeons & Dragons spell browser built with HTML, CSS, and JavaScript. It uses the D&D 5e API to display spells that can be searched and filtered by class and spell level. Users can view detailed spell information and save their favorite spells to their own spellbook. Saved spells are stored in the browser using localStorage, so they are still available after refreshing the page. The project was built to practice working with APIs, JavaScript, and responsive web design while creating something useful for D&D players.
+Arcane Archive is a simple Dungeons & Dragons spell browser built with HTML, CSS, and JavaScript. It uses the D&D 5e API to display spells that can be searched and filtered by class and spell level. Users can view detailed spell information and save their favorite spells to their own spellbook. Saved spells are stored in the browser using local storage, so they are still available after refreshing the page. The project was built to practice working with APIs, JavaScript, and responsive web design while creating something useful for D&D players.
 
 ## Features
 
@@ -9,7 +9,7 @@ Arcane Archive is a simple Dungeons & Dragons spell browser built with HTML, CSS
 - Filter spells by class and spell level.
 - View detailed spell information by expanding each spell card.
 - Save favorite spells to a personal spellbook.
-- Saved spells remain available after refreshing the page using localStorage.
+- Saved spells remain available after refreshing the page using local storage.
 - Displays how long ago each spell was saved.
 
 ## Capstone Requirements Completed
@@ -29,8 +29,8 @@ Arcane Archive is a simple Dungeons & Dragons spell browser built with HTML, CSS
 ### Feature 3
 - Uses custom functions that accept multiple parameters, such as `createSpellCard(details, dateSaved)`, to build spell cards.
 
-### Feature 4 (Backup)
-- Stores saved spells in localStorage so they remain available after the page is refreshed.
+### Feature 4 
+- Stores saved spells in local storage so they remain available after the page is refreshed.
 
 ## Running the Project
 
@@ -46,5 +46,5 @@ Arcane Archive is a simple Dungeons & Dragons spell browser built with HTML, CSS
 - CSS
 - JavaScript
 - D&D 5e SRD API
-- LocalStorage
+- Local Storage
 
