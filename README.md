@@ -32,6 +32,10 @@ Arcane Archive is a simple Dungeons & Dragons spell browser built with HTML, CSS
 ### Feature 4 
 - Stores saved spells in local storage so they remain available after the page is refreshed.
 
+### Feature 5
+
+- Calculates how long ago a spell was saved by comparing the saved date with the current date. The spellbook displays messages such as "Saved today," "Saved 2 days ago," or the exact saved date.
+
 ## Running the Project
 
 1. Clone or download this repository.
