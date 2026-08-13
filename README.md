@@ -52,3 +52,6 @@ Arcane Archive is a simple Dungeons & Dragons spell browser built with HTML, CSS
 - D&D 5e SRD API
 - Local Storage
 
+## AI Usage
+
+AI was used as a learning tool for this project. It was used for some debugging, as well as for explaining general concepts and different approaches to writing the code.
